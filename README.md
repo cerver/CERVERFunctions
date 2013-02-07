@@ -1,14 +1,14 @@
 Introduction
 ------------
 
-CERVER Functions is a collection of Generative Components nodes that contain various usfull hellper nodes and functions
+CERVER Functions is a collection of Generative Components nodes that contain various useful helper nodes and functions
 
 
 Installation and Requirements <a id="install" />
 -----------------------------
 
 Generative components 8.11.9.169 or above is required.  
-Generative Components is a free standalone application by Bentley Systems and can be dowloaded here  
+Generative Components is a free standalone application by Bentley Systems and can be downloaded here  
 http://communities.bentley.com/products/betas/generativecomponents_beta_users/default.aspx
 
 
