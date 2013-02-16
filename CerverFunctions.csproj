@@ -50,7 +50,7 @@
     </DocumentationFile>
     <NoWarn>1573,1591</NoWarn>
     <Optimize>true</Optimize>
-    <OutputPath>D:\Users\robert\Documents\GC 08.11.09.110\WorkSpace\Projects\Examples\GC_Default\Assemblies\</OutputPath>
+    <OutputPath>D:\Users\robert\Documents\GC 08.11.09.169\WorkSpace\Projects\Examples\GC_Default\Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
