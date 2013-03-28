@@ -131,102 +131,7 @@ namespace Cerver.Functions
 
         }
        
-        public static List<DPoint3d> RemoveDupPts(List<DPoint3d> mypoints, double tolerance)
-        {
-            List<DPoint3d> nodups = new List<DPoint3d>(mypoints.Count / 4); // Preallocate some. Just a guess
 
-            if (mypoints.Count > 0)
-            {
-                nodups.Add(mypoints[0]);
-
-                double squaredTolerance = tolerance * tolerance; // This also avoids negative tolerances
-
-                for (int i = 1; i < mypoints.Count; i++) // The first one is already in
-                {
-                    bool unique = true;
-                    DPoint3d mpi = mypoints[i];
-
-                    for (int j = 0; j < nodups.Count; j++)
-                    {
-                        if (SquaredDistance(mpi, nodups[j]) <= squaredTolerance)
-                        {
-                            unique = false;
-                            break; // Once not unique, look no further
-                        }
-                    }
-
-                    if (unique)
-                    {
-                        nodups.Add(mpi);
-                    }
-                }
-            }
-
-            return nodups;
-        }
-        public static List<Line> RemoveDupLn(List<Line> lines, double tolerance)
-        {
-            List<Line> nodups = new List<Line>();
-
-            for (int i = 0; i <= lines.Count - 1; i++)
-            {
-                if (lines[i].GetSuccess())
-                {
-                    nodups.Add(lines[i]);
-                }
-                if (nodups.Count > 0)
-                    break;
-            }
-
-            bool dup = false;
-
-
-            for (int i = 0; i <= lines.Count - 1; i++)
-            {
-                dup = false;
-
-
-                for (int j = 0; j <= nodups.Count - 1; j++)
-                {
- 
-                    if ((Distance(lines[i].StartPoint, lines[i].EndPoint) <= tolerance & Distance(nodups[j].EndPoint, lines[i].EndPoint) <= tolerance) | (Distance(nodups[j].EndPoint, lines[i].StartPoint) <= tolerance & Distance(nodups[j].StartPoint, lines[i].EndPoint) <= tolerance))
-                    {
-                        dup = true;
-                    }
-                    else
-                    {
-                    }
-                }
-
-                if (dup == false & lines[i].GetSuccess())
-                {
-                    nodups.Add(lines[i]);
-                }
-
-            }
-            return nodups;
-
-        }
-        public static List<Line> InterConnect(FeatureUpdateContext updateCtx, List<Point> pts)
-        {
-            int ct = (pts.Count - 1) * pts.Count;
-
-            List<Line> inter = new List<Line>(ct);
-            Line temp = new Line();
-
-
-            for (int i = 0; i < pts.Count - 1; i++)
-            {
-                for (int j = i + 1; j < pts.Count; j++)
-                {
-                    temp.ByPoints(updateCtx, pts[i], pts[j]);
-                    inter.Add(temp);
-
-                }
-            }
-
-            return inter;
-        }
 
         public static DPoint3d MeshCP(Mesh m, DPoint3d p)
         {
@@ -317,19 +222,29 @@ namespace Cerver.Functions
                 }
                 
             }
+    
+            return GetConnectedPointID(m, ptid);
+
+        }
+        public static int[] GetConnectedPointID(Mesh m, int vtxId)
+        {
+
+            int ptid = vtxId;
+
             int[] svtx, evtx;
             DSegment3d[] edges = GetMeshEdges(m, out svtx, out evtx);
             Dictionary<int, int> connectedID = new Dictionary<int, int>(6);
 
-            for (int i = 0; i <svtx.Length; i++)
+            for (int i = 0; i < svtx.Length; i++)
             {
                 if (svtx[i] == ptid) connectedID.Add(evtx[i], evtx[i]);
                 if (evtx[i] == ptid) connectedID.Add(svtx[i], svtx[i]);
             }
 
-            return connectedID.Values.ToArray(); 
+            return connectedID.Values.ToArray();
 
         }
+
         public static DVector3d NormalAtUVParameterOnSurface(BsplineSurface com_bsplineSurface, double U, double V)
         {
             if (com_bsplineSurface != null)
@@ -386,6 +301,10 @@ namespace Cerver.GCExtensionMethods
         public static int[] ConnectedVtxID(this Mesh m, DPoint3d searchPoint)
         {
             return CerverFunctions.GetConnectedPointID(m, searchPoint);
+        }
+        public static int[] ConnectedVtxID(this Mesh m, int vtxIndex)
+        {
+            return CerverFunctions.GetConnectedPointID(m,vtxIndex );
         }
 
         public static DPoint3d[] ConnectedVtx(this Mesh m, DPoint3d searchPoint)
