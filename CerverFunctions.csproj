@@ -39,7 +39,7 @@
     </DocumentationFile>
     <NoWarn>1573,1591</NoWarn>
     <Optimize>false</Optimize>
-    <OutputPath>C:\Users\Robert\Documents\Bentley GenerativeComponents 08.11.09.169\WorkSpace\Projects\Examples\GC_Default\Assemblies\</OutputPath>
+    <OutputPath>C:\Users\Robert\Documents\Bentley GenerativeComponents 08.11.09.179\WorkSpace\Projects\Examples\GC_Default\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -69,6 +69,11 @@
     <Reference Include="Bentley.GenerativeComponents.GCScript, Version=8.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(GC_EXECUTABLE_FOLDER)\Assemblies\Bentley.GenerativeComponents.GCScript.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bentley.GenerativeComponents.ScriptEditor, Version=8.9.0.0, Culture=neutral, PublicKeyToken=4bf6c96a266e58d4, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Bentley 08.11.09.179\GenerativeComponents\assemblies\Bentley.GenerativeComponents.ScriptEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Bentley.GenerativeComponents.View, Version=8.9.0.0, Culture=neutral, processorArchitecture=MSIL">

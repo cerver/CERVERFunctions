@@ -131,8 +131,6 @@ namespace Cerver.Functions
 
         }
        
-
-
         public static DPoint3d MeshCP(Mesh m, DPoint3d p)
         {
             double cdist = m.Vertices[0].DPoint3d.Distance(ref p);
@@ -156,26 +154,34 @@ namespace Cerver.Functions
         public static DSegment3d[] GetMeshEdges(Mesh m, out int[] startVtx, out int[] endVtx)
         {
             Dictionary<string, DSegment3d> edgeDic = new Dictionary<string, DSegment3d>(m.Vertices.Length);
+
             string key, keyr;
+
             DPoint3d p0, p1;
 
             List<int> svtx = new List<int>(m.Vertices.Length * 2);
-            List<int> evtx = new List<int>(m.Vertices.Length * 2); 
+            List<int> evtx = new List<int>(m.Vertices.Length * 2);
+            string hash1, hash2;            
 
             foreach (var f in m.Indices)
             {
                 for (int i = 0; i < f.Length; i++)
                 {
+          
+                    hash2 = m.Vertices[f[i] - 1].GetHashCode().ToString();
                     if (i < f.Length - 1)
                     {
-                        key = string.Format("{0}{1}{2}-{3}{4}{5}", m.Vertices[f[i] - 1].X, m.Vertices[f[i] - 1].Y, m.Vertices[f[i] - 1].Z, m.Vertices[f[i + 1] - 1].X, m.Vertices[f[i + 1] - 1].Y, m.Vertices[f[i + 1] - 1].Z);
-                        keyr = string.Format("{3}{4}{5}-{0}{1}{2}", m.Vertices[f[i] - 1].X, m.Vertices[f[i] - 1].Y, m.Vertices[f[i] - 1].Z, m.Vertices[f[i + 1] - 1].X, m.Vertices[f[i + 1] - 1].Y, m.Vertices[f[i + 1] - 1].Z);
-
+                        hash1 = m.Vertices[f[i + 1] - 1].GetHashCode().ToString();
+                        
+                        key = hash2 + "|" + hash1;
+                        keyr = hash1 + "|" + hash2;
                     }
                     else
                     {
-                        key = string.Format("{0}{1}{2}-{3}{4}{5}", m.Vertices[f[i] - 1].X, m.Vertices[f[i] - 1].Y, m.Vertices[f[i] - 1].Z, m.Vertices[f[0] - 1].X, m.Vertices[f[0] - 1].Y, m.Vertices[f[0] - 1].Z);
-                        keyr = string.Format("{3}{4}{5}-{0}{1}{2}", m.Vertices[f[i] - 1].X, m.Vertices[f[i] - 1].Y, m.Vertices[f[i] - 1].Z, m.Vertices[f[0] - 1].X, m.Vertices[f[0] - 1].Y, m.Vertices[f[0] - 1].Z);
+                        hash1 = m.Vertices[f[0] - 1].GetHashCode().ToString();
+
+                        key = hash2 + "|" + hash1;
+                        keyr = hash1 + "|" + hash2;
                     }
 
                     if (!edgeDic.ContainsKey(key) && !edgeDic.ContainsKey(keyr))
@@ -195,8 +201,14 @@ namespace Cerver.Functions
                             svtx.Add(f[i] - 1);
                             evtx.Add(f[0] - 1);
                         }
+                        try
+                        {
+                            edgeDic.Add(key, new DSegment3d(ref p0, ref p1));
+                        }catch (ArgumentException)
+                        {
+                            Feature.Print("key exits");
+                        }
 
-                        edgeDic.Add(key, new DSegment3d(ref p0, ref p1));
                     }
 
                 }

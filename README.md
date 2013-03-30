@@ -7,7 +7,7 @@ CERVER Functions is a collection of Generative Components nodes that contain var
 Installation and Requirements <a id="install" />
 -----------------------------
 
-Generative components 8.11.9.169 or above is required.  
+Generative components 8.11.9.179 or above is required.  
 Generative Components is a free standalone application by Bentley Systems and can be downloaded here  
 http://communities.bentley.com/products/betas/generativecomponents_beta_users/default.aspx
 
